@@ -13,8 +13,5 @@ export default function (source) {
   }
   const parserResolves = new ParserResolves(coreSettings)
   parserResolves.run()
-  console.log(coreSettings);
-
-
   return source
 }
