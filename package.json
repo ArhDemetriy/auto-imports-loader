@@ -20,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/ArhDemetriy/auto-imports-loader/issues"
   },
-  "homepage": "https://github.com/ArhDemetriy/auto-imports-loader#readme"
+  "homepage": "https://github.com/ArhDemetriy/auto-imports-loader#readme",
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.28",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.5"
+  }
 }
