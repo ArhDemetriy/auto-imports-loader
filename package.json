@@ -1,14 +1,14 @@
 {
-  "name": "auto-imports-loader",
+  "name": "auto-imports-plugin",
   "version": "0.6.0",
   "description": "auto resolver pug, scss e.t.c imports. for webpack",
-  "main": "auto-imports-loader.js",
+  "main": "autoImportsPlugin.js",
   "scripts": {
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArhDemetriy/auto-imports-loader.git"
+    "url": "git+https://github.com/ArhDemetriy/auto-imports-plugin.git"
   },
   "keywords": [
     "webpack",
@@ -19,9 +19,9 @@
   "author": "ArhDemetriy <ArhDemetriy@GMail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ArhDemetriy/auto-imports-loader/issues"
+    "url": "https://github.com/ArhDemetriy/auto-imports-plugin/issues"
   },
-  "homepage": "https://github.com/ArhDemetriy/auto-imports-loader#readme",
+  "homepage": "https://github.com/ArhDemetriy/auto-imports-plugin#readme",
   "dependencies": {
     "webpack": "^5.0.0"
   },
