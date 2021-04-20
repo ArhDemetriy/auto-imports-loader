@@ -30,9 +30,9 @@ class AutoImportsPlugin implements WebpackPlugin{
   }) {
     this.options = options
     this.importsMap = new Map(this.options.startDirs.map(startDir => [startDir, new Map()]))
-    this.getPartitionImports1()
+    this.getPartitionImports()
   }
-  protected getPartitionImports1() {
+  protected getPartitionImports() {
     return new Map(this.options.startDirs.map(startDir => {
       const importedDirs = this.getPromisePartitionedImports(startDir)
         .then(this.getFlatImportNamesCollection)

@@ -22,6 +22,9 @@
     "url": "https://github.com/ArhDemetriy/auto-imports-loader/issues"
   },
   "homepage": "https://github.com/ArhDemetriy/auto-imports-loader#readme",
+  "dependencies": {
+    "webpack": "^5.0.0"
+  },
   "devDependencies": {
     "@types/node": "^14.14.28",
     "ts-node": "^9.1.1",
