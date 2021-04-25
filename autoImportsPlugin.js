@@ -62,12 +62,12 @@ var AutoImportsPlugin = /** @class */ (function () {
         try {
             for (var _b = __values(importTexts.keys()), _c = _b.next(); !_c.done; _c = _b.next()) {
                 var ext = _c.value;
-                var importText = importTexts.get(ext).trim();
-                // если в тексте только перевод строки или пробел. файл не создаём
-                if (importText.length <= 2) {
-                    continue;
-                }
-                var name = (ext != '.json') ? "" + this.options.basenameImportFiles + ext : this.options.basenameImportFiles + ".generate" + ext;
+                // файл создаётся всегда. т.к. внешние, к пакету, файлы ожидают его наличия (импортят его).
+                // таков интерфейс пакета
+                var importText = importTexts.get(ext).trimStart();
+                var name = (ext != '.json')
+                    ? "" + this.options.basenameImportFiles + ext
+                    : this.options.basenameImportFiles + ".generate" + ext;
                 var filePath = path.resolve(to, name);
                 fs.writeFile(filePath, importText, function () { });
             }
@@ -81,46 +81,47 @@ var AutoImportsPlugin = /** @class */ (function () {
         }
     };
     AutoImportsPlugin.prototype.generateImportTexts = function (importsMap) {
-        var e_2, _a, e_3, _b;
+        var e_2, _a;
+        var _this = this;
+        // всё распределено по расширениям
         var importTexts = new Map();
+        var _loop_1 = function (ext) {
+            var importText = __spreadArray([], __read(new Set(importsMap.get(ext)))).reduce(function (importText, nextImportFolder) {
+                // по соглашению: basename files === basename his folders
+                var name = path.basename(nextImportFolder);
+                // если использовать join, может ломаеться pug-loader. scss-loader за этим не замечен.
+                var nextFilePath = path.resolve(nextImportFolder, name);
+                // очевидно, в имени каталога нет расширения, оно берётся из мапы генераторов.
+                // все каталоги раскидываются по расширениям их файлов в импортируемом коде.
+                if (!_this.options.withoutExt) {
+                    nextFilePath += ext;
+                }
+                return importText + nextFilePath;
+            }, '');
+            importTexts.set(ext, importText);
+        };
         try {
-            for (var _c = __values(this.options.importsExprGenerators.keys()), _d = _c.next(); !_d.done; _d = _c.next()) {
-                var ext = _d.value;
-                var importText = '';
-                try {
-                    for (var _e = (e_3 = void 0, __values(__spreadArray([], __read(new Set(importsMap.get(ext)))))), _f = _e.next(); !_f.done; _f = _e.next()) {
-                        var importPath = _f.value;
-                        var name = path.basename(importPath).concat(ext);
-                        var filePath = path.resolve(importPath, name);
-                        importText += this.options.importsExprGenerators.get(ext)(filePath);
-                    }
-                }
-                catch (e_3_1) { e_3 = { error: e_3_1 }; }
-                finally {
-                    try {
-                        if (_f && !_f.done && (_b = _e["return"])) _b.call(_e);
-                    }
-                    finally { if (e_3) throw e_3.error; }
-                }
-                importTexts.set(ext, importText);
+            for (var _b = __values(this.options.importsExprGenerators.keys()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var ext = _c.value;
+                _loop_1(ext);
             }
         }
         catch (e_2_1) { e_2 = { error: e_2_1 }; }
         finally {
             try {
-                if (_d && !_d.done && (_a = _c["return"])) _a.call(_c);
+                if (_c && !_c.done && (_a = _b["return"])) _a.call(_b);
             }
             finally { if (e_2) throw e_2.error; }
         }
         return importTexts;
     };
     AutoImportsPlugin.prototype.fillingImportsMap = function (importDirs, importsForStartDir) {
-        var e_4, _a, e_5, _b;
+        var e_3, _a, e_4, _b;
         try {
             for (var importDirs_1 = __values(importDirs), importDirs_1_1 = importDirs_1.next(); !importDirs_1_1.done; importDirs_1_1 = importDirs_1.next()) {
                 var importDir = importDirs_1_1.value;
                 try {
-                    for (var _c = (e_5 = void 0, __values(this.readdir(path.resolve(importDir)).files)), _d = _c.next(); !_d.done; _d = _c.next()) {
+                    for (var _c = (e_4 = void 0, __values(this.readdir(path.resolve(importDir)).files)), _d = _c.next(); !_d.done; _d = _c.next()) {
                         var file = _d.value;
                         var ext = path.extname(file);
                         if (ext == '.json' && path.basename(file, ext) == this.options.basenameImportFiles) {
@@ -134,51 +135,51 @@ var AutoImportsPlugin = /** @class */ (function () {
                         importFiles.push(importDir);
                     }
                 }
-                catch (e_5_1) { e_5 = { error: e_5_1 }; }
+                catch (e_4_1) { e_4 = { error: e_4_1 }; }
                 finally {
                     try {
                         if (_d && !_d.done && (_b = _c["return"])) _b.call(_c);
                     }
-                    finally { if (e_5) throw e_5.error; }
+                    finally { if (e_4) throw e_4.error; }
                 }
             }
         }
-        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
         finally {
             try {
                 if (importDirs_1_1 && !importDirs_1_1.done && (_a = importDirs_1["return"])) _a.call(importDirs_1);
             }
-            finally { if (e_4) throw e_4.error; }
+            finally { if (e_3) throw e_3.error; }
         }
         return importsForStartDir;
     };
     AutoImportsPlugin.prototype.getFlatImportNamesCollection = function (imports) {
-        var e_6, _a, e_7, _b;
+        var e_5, _a, e_6, _b;
         var importsList = [];
         try {
             for (var _c = __values(imports.keys()), _d = _c.next(); !_d.done; _d = _c.next()) {
                 var source = _d.value;
                 try {
-                    for (var _e = (e_7 = void 0, __values(imports.get(source).values())), _f = _e.next(); !_f.done; _f = _e.next()) {
+                    for (var _e = (e_6 = void 0, __values(imports.get(source).values())), _f = _e.next(); !_f.done; _f = _e.next()) {
                         var dirName = _f.value;
                         importsList.push(path.join(source, dirName));
                     }
                 }
-                catch (e_7_1) { e_7 = { error: e_7_1 }; }
+                catch (e_6_1) { e_6 = { error: e_6_1 }; }
                 finally {
                     try {
                         if (_f && !_f.done && (_b = _e["return"])) _b.call(_e);
                     }
-                    finally { if (e_7) throw e_7.error; }
+                    finally { if (e_6) throw e_6.error; }
                 }
             }
         }
-        catch (e_6_1) { e_6 = { error: e_6_1 }; }
+        catch (e_5_1) { e_5 = { error: e_5_1 }; }
         finally {
             try {
                 if (_d && !_d.done && (_a = _c["return"])) _a.call(_c);
             }
-            finally { if (e_6) throw e_6.error; }
+            finally { if (e_5) throw e_5.error; }
         }
         return importsList;
     };
@@ -190,7 +191,7 @@ var AutoImportsPlugin = /** @class */ (function () {
         return partitionImports.getPartitionedNamesAsync();
     };
     AutoImportsPlugin.prototype.readdir = function (source) {
-        var e_8, _a;
+        var e_7, _a;
         var dirIncludes = {
             dirs: [],
             files: []
@@ -206,12 +207,12 @@ var AutoImportsPlugin = /** @class */ (function () {
                 }
             }
         }
-        catch (e_8_1) { e_8 = { error: e_8_1 }; }
+        catch (e_7_1) { e_7 = { error: e_7_1 }; }
         finally {
             try {
                 if (_c && !_c.done && (_a = _b["return"])) _a.call(_b);
             }
-            finally { if (e_8) throw e_8.error; }
+            finally { if (e_7) throw e_7.error; }
         }
         return dirIncludes;
     };
