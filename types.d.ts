@@ -1,9 +1,11 @@
-declare type AutoInputOptions =
+declare type AutoImportsPluginOptions =
   {
-    sources: ['src/components'],
-    startImportFileName: string,
-    parsedImportFilesGenerators: Map<string, (fileName: string) => string>,
+    sources: string[],
+    startDirs: string[],
+    basenameImportFiles: string,
+    importsExprGenerators: Map<string, (importPath: string) => string>,
+    withoutExt?: boolean,
   }
 export {
-  AutoInputOptions
+  AutoImportsPluginOptions
 }

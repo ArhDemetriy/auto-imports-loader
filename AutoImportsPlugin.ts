@@ -1,15 +1,10 @@
 import { Compiler } from "webpack"
 import * as fs from "fs"
 import * as path from 'path'
+import { AutoImportsPluginOptions } from "./types";
 import { PartitionImports } from "./core/PartitionImports"
 import { SettingsPartitionImports, InterfacePartitionImports, ImportNamesCollection } from "./core/types"
 
-type PluginOptions = {
-  sources: string[],
-  startDirs: string[],
-  basenameImportFiles: string,
-  importsExprGenerators: Map<string, (importPath: string) => string>,
-}
 interface WebpackPlugin{
   apply(compiler: Compiler): void;
 }
@@ -21,12 +16,13 @@ class AutoImportsPlugin implements WebpackPlugin{
   // startDir, ext, paths wisout file
   protected readonly importsMap: Map<string, Map<string, string[]>>
   protected partitionImports: Promise<ImportNamesCollection>[]
-  protected readonly options: PluginOptions
+  protected readonly options: AutoImportsPluginOptions
   constructor(options: {
     sources: string[],
     startDirs: string[],
     basenameImportFiles: string,
     importsExprGenerators: Map<string, (importPath: string) => string>,
+    withoutExt?: boolean,
   }) {
     this.options = options
     this.importsMap = new Map(this.options.startDirs.map(startDir => [startDir, new Map()]))
@@ -69,7 +65,7 @@ class AutoImportsPlugin implements WebpackPlugin{
 
         // очевидно, в имени каталога нет расширения, оно берётся из мапы генераторов.
         // все каталоги раскидываются по расширениям их файлов в импортируемом коде.
-        if (!(this.options as any).wisoutExt) {
+        if (!this.options.withoutExt) {
           nextFilePath += ext
         }
 
@@ -134,4 +130,5 @@ class AutoImportsPlugin implements WebpackPlugin{
 
 export {
   AutoImportsPlugin,
+  AutoImportsPluginOptions,
 }
