@@ -14,7 +14,8 @@
     "webpack",
     "pug",
     "scss",
-    "imports"
+    "imports",
+    "TypeScript"
   ],
   "author": "ArhDemetriy <ArhDemetriy@GMail.com>",
   "license": "MIT",
