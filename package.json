@@ -1,6 +1,6 @@
 {
   "name": "auto-imports-plugin",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "auto resolver pug, scss e.t.c imports. for webpack",
   "main": "autoImportsPlugin.js",
   "scripts": {
