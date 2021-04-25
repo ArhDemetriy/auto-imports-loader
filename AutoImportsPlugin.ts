@@ -46,12 +46,12 @@ class AutoImportsPlugin implements WebpackPlugin{
   }
   protected saveImportFiles(importTexts: Map<string, string>, to: string) {
     for (const ext of importTexts.keys()) {
-      const importText = importTexts.get(ext).trim()
-      // если в тексте только перевод строки или пробел. файл не создаём
-      if (importText.length <= 2) {
-        continue
-      }
-      const name = (ext != '.json') ? `${this.options.basenameImportFiles}${ext}` : `${this.options.basenameImportFiles}.generate${ext}`
+      // файл создаётся всегда. т.к. внешние, к пакету, файлы ожидают его наличия (импортят его).
+      // таков интерфейс пакета
+      const importText = importTexts.get(ext).trimStart()
+      const name = (ext != '.json')
+        ? `${this.options.basenameImportFiles}${ext}`
+        : `${this.options.basenameImportFiles}.generate${ext}`
       const filePath = path.resolve(to, name)
       fs.writeFile(filePath, importText, () => { })
     }
