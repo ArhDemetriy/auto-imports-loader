@@ -61,23 +61,25 @@ class AutoImportsPlugin implements WebpackPlugin{
     // всё распределено по расширениям
     const importTexts: Map<string, string> = new Map()
     for (const ext of this.options.importsExprGenerators.keys()) {
-      let importText = ''
-      // берутся каталоги где есть файлы нужного расширения
-      for (const importPath of [...new Set(importsMap.get(ext))]) {
+      let importText = [...new Set(importsMap.get(ext))].reduce((importText, nextImportFolder) => {
         // по соглашению: basename files === basename his folders
-        let name = path.basename(importPath)
-        if (!(this.options as any).wisoutExt) {
-          name += ext
-        }
-        const filePath = path.resolve(importPath, name)
+        const name = path.basename(nextImportFolder)
+        // если использовать join, может ломаеться pug-loader. scss-loader за этим не замечен.
+        let nextFilePath = path.resolve(nextImportFolder, name)
 
-        const importExprForThisFile = this.options.importsExprGenerators.get(ext)(filePath)
-        importText += importExprForThisFile
-      }
+        // очевидно, в имени каталога нет расширения, оно берётся из мапы генераторов.
+        // все каталоги раскидываются по расширениям их файлов в импортируемом коде.
+        if (!(this.options as any).wisoutExt) {
+          nextFilePath += ext
+        }
+
+        return importText + nextFilePath
+      }, '')
       importTexts.set(ext, importText)
     }
     return importTexts
   }
+
   protected fillingImportsMap(importDirs: string[], importsForStartDir: Map<string, string[]>) {
     for (const importDir of importDirs) {
       for (const file of this.readdir(path.resolve(importDir)).files) {
