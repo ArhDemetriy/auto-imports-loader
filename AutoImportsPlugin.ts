@@ -57,7 +57,7 @@ class AutoImportsPlugin implements WebpackPlugin{
     // всё распределено по расширениям
     const importTexts: Map<string, string> = new Map()
     for (const ext of this.options.importsExprGenerators.keys()) {
-      let importText = [...new Set(importsMap.get(ext))].reduce((importText, nextImportFolder) => {
+      let importTextForExt = [...new Set(importsMap.get(ext))].reduce((importText, nextImportFolder) => {
         // по соглашению: basename files === basename his folders
         const name = path.basename(nextImportFolder)
         // если использовать join, может ломаеться pug-loader. scss-loader за этим не замечен.
@@ -69,9 +69,11 @@ class AutoImportsPlugin implements WebpackPlugin{
           nextFilePath += ext
         }
 
-        return importText + nextFilePath
+        const nextImportExpr = this.options.importsExprGenerators.get(ext)(nextFilePath)
+
+        return importText + nextImportExpr
       }, '')
-      importTexts.set(ext, importText)
+      importTexts.set(ext, importTextForExt)
     }
     return importTexts
   }

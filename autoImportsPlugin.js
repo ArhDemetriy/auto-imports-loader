@@ -86,7 +86,7 @@ var AutoImportsPlugin = /** @class */ (function () {
         // всё распределено по расширениям
         var importTexts = new Map();
         var _loop_1 = function (ext) {
-            var importText = __spreadArray([], __read(new Set(importsMap.get(ext)))).reduce(function (importText, nextImportFolder) {
+            var importTextForExt = __spreadArray([], __read(new Set(importsMap.get(ext)))).reduce(function (importText, nextImportFolder) {
                 // по соглашению: basename files === basename his folders
                 var name = path.basename(nextImportFolder);
                 // если использовать join, может ломаеться pug-loader. scss-loader за этим не замечен.
@@ -96,9 +96,10 @@ var AutoImportsPlugin = /** @class */ (function () {
                 if (!_this.options.withoutExt) {
                     nextFilePath += ext;
                 }
-                return importText + nextFilePath;
+                var nextImportExpr = _this.options.importsExprGenerators.get(ext)(nextFilePath);
+                return importText + nextImportExpr;
             }, '');
-            importTexts.set(ext, importText);
+            importTexts.set(ext, importTextForExt);
         };
         try {
             for (var _b = __values(this.options.importsExprGenerators.keys()), _c = _b.next(); !_c.done; _c = _b.next()) {
