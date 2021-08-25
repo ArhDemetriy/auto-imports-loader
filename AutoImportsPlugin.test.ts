@@ -1,0 +1,328 @@
+import * as AutoImportsPlugin from "./AutoImportsPlugin"
+
+// @ponicode
+describe("apply", () => {
+    let inst: any
+
+    beforeEach(() => {
+        inst = new AutoImportsPlugin.AutoImportsPlugin({ sources: ["IM68JBJ"], startDirs: ["/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos"], basenameImportFiles: "/usr/share", importsExprGenerators: { size: 32 }, withoutExt: false })
+    })
+
+    test("0", () => {
+        let callFunction: any = () => {
+            inst.apply(undefined)
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+})
+
+// @ponicode
+describe("saveImportFiles", () => {
+    let inst: any
+
+    beforeEach(() => {
+        inst = new AutoImportsPlugin.AutoImportsPlugin({ sources: ["UP72NWV", "AM32WSU", "HR47NOU", "IM68JBJ"], startDirs: ["/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos"], basenameImportFiles: "/usr/sbin", importsExprGenerators: { size: 1 }, withoutExt: true })
+    })
+
+    test("0", () => {
+        let callFunction: any = () => {
+            inst.saveImportFiles({ size: 11 }, "C:\\\\path\\to\\file.ext")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("1", () => {
+        let callFunction: any = () => {
+            inst.saveImportFiles({ size: 256 }, "C:\\\\path\\to\\folder\\")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("2", () => {
+        let callFunction: any = () => {
+            inst.saveImportFiles({ size: 4 }, "C:\\\\path\\to\\folder\\")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("3", () => {
+        let callFunction: any = () => {
+            inst.saveImportFiles({ size: 11 }, "path/to/folder/")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("4", () => {
+        let callFunction: any = () => {
+            inst.saveImportFiles({ size: 80 }, "path/to/folder/")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("5", () => {
+        let callFunction: any = () => {
+            inst.saveImportFiles({ size: -Infinity }, "")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+})
+
+// @ponicode
+describe("generateImportTexts", () => {
+    let inst: any
+
+    beforeEach(() => {
+        inst = new AutoImportsPlugin.AutoImportsPlugin({ sources: ["UP72NWV", "LE53KBN", "HR47NOU", "UP72NWV", "UP72NWV"], startDirs: ["/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos"], basenameImportFiles: "/usr/share", importsExprGenerators: { size: 16 }, withoutExt: true })
+    })
+
+    test("0", () => {
+        let callFunction: any = () => {
+            inst.generateImportTexts({ size: 4 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("1", () => {
+        let callFunction: any = () => {
+            inst.generateImportTexts({ size: 1 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("2", () => {
+        let callFunction: any = () => {
+            inst.generateImportTexts({ size: 32 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("3", () => {
+        let callFunction: any = () => {
+            inst.generateImportTexts({ size: 2 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("4", () => {
+        let callFunction: any = () => {
+            inst.generateImportTexts({ size: 1000 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("5", () => {
+        let callFunction: any = () => {
+            inst.generateImportTexts({ size: -Infinity })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+})
+
+// @ponicode
+describe("fillingImportsMap", () => {
+    let inst: any
+
+    beforeEach(() => {
+        inst = new AutoImportsPlugin.AutoImportsPlugin({ sources: ["HR47NOU"], startDirs: ["/PDFData/rothfuss/data/UCF101/prepared_videos"], basenameImportFiles: "/usr/sbin", importsExprGenerators: { size: 80 }, withoutExt: false })
+    })
+
+    test("0", () => {
+        let callFunction: any = () => {
+            inst.fillingImportsMap(["/usr/share", "/usr/sbin"], { size: 1000 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("1", () => {
+        let callFunction: any = () => {
+            inst.fillingImportsMap(["/usr/sbin", "/usr/sbin", "/selinux", "/selinux"], { size: 1 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("2", () => {
+        let callFunction: any = () => {
+            inst.fillingImportsMap(["/usr/ports", "/selinux", "/selinux"], { size: 10 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("3", () => {
+        let callFunction: any = () => {
+            inst.fillingImportsMap(["/usr/sbin", "/opt/share", "/usr/ports", "/usr/ports", "/usr/share"], { size: 10 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("4", () => {
+        let callFunction: any = () => {
+            inst.fillingImportsMap(["/usr/ports", "/usr/sbin", "/opt/share"], { size: 256 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("5", () => {
+        let callFunction: any = () => {
+            inst.fillingImportsMap([], { size: Infinity })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+})
+
+// @ponicode
+describe("getFlatImportNamesCollection", () => {
+    let inst: any
+
+    beforeEach(() => {
+        inst = new AutoImportsPlugin.AutoImportsPlugin({ sources: ["LE53KBN", "IM68JBJ", "LE53KBN", "AM32WSU", "IM68JBJ"], startDirs: ["/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos"], basenameImportFiles: "/usr/share", importsExprGenerators: { size: 2 }, withoutExt: false })
+    })
+
+    test("0", () => {
+        let callFunction: any = () => {
+            inst.getFlatImportNamesCollection({ size: 11 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("1", () => {
+        let callFunction: any = () => {
+            inst.getFlatImportNamesCollection({ size: 16 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("2", () => {
+        let callFunction: any = () => {
+            inst.getFlatImportNamesCollection({ size: 1 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("3", () => {
+        let callFunction: any = () => {
+            inst.getFlatImportNamesCollection({ size: 10 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("4", () => {
+        let callFunction: any = () => {
+            inst.getFlatImportNamesCollection({ size: 1000 })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("5", () => {
+        let callFunction: any = () => {
+            inst.getFlatImportNamesCollection({ size: Infinity })
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+})
+
+// @ponicode
+describe("getPromisePartitionedImports", () => {
+    let inst: any
+
+    beforeEach(() => {
+        inst = new AutoImportsPlugin.AutoImportsPlugin({ sources: ["AM32WSU", "AM32WSU", "UP72NWV", "LE53KBN"], startDirs: ["/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos", "/PDFData/rothfuss/data/UCF101/prepared_videos"], basenameImportFiles: "/usr/sbin", importsExprGenerators: { size: 10 }, withoutExt: false })
+    })
+
+    test("0", () => {
+        let callFunction: any = () => {
+            inst.getPromisePartitionedImports("../packet_data/bgp4/")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("1", () => {
+        let callFunction: any = () => {
+            inst.getPromisePartitionedImports("/synergys")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("2", () => {
+        let callFunction: any = () => {
+            inst.getPromisePartitionedImports("/synergyc")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("3", () => {
+        let callFunction: any = () => {
+            inst.getPromisePartitionedImports("/Synergy.app/Contents/MacOS/")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("4", () => {
+        let callFunction: any = () => {
+            inst.getPromisePartitionedImports("/lustre/storeB/users/lisesg/harmonie/AM2p5_MIST2_c38h12/archive/")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("5", () => {
+        let callFunction: any = () => {
+            inst.getPromisePartitionedImports("")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+})
+
+// @ponicode
+describe("readdir", () => {
+    let inst: any
+
+    beforeEach(() => {
+        inst = new AutoImportsPlugin.AutoImportsPlugin({ sources: ["HR47NOU", "HR47NOU"], startDirs: ["/PDFData/rothfuss/data/UCF101/prepared_videos"], basenameImportFiles: "/usr/sbin", importsExprGenerators: { size: 2 }, withoutExt: false })
+    })
+
+    test("0", () => {
+        let callFunction: any = () => {
+            inst.readdir("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%20baseProfile%3D%22full%22%20width%3D%22undefined%22%20height%3D%22undefined%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22grey%22%2F%3E%3Ctext%20x%3D%22NaN%22%20y%3D%22NaN%22%20font-size%3D%2220%22%20alignment-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%3Eundefinedxundefined%3C%2Ftext%3E%3C%2Fsvg%3E")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+
+    test("1", () => {
+        let callFunction: any = () => {
+            inst.readdir("")
+        }
+    
+        expect(callFunction).not.toThrow()
+    })
+})
